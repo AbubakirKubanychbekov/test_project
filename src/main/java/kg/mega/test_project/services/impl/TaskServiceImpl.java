@@ -1,5 +1,6 @@
 package kg.mega.test_project.services.impl;
 
+import kg.mega.test_project.config.EmailConfig;
 import kg.mega.test_project.dal.entity.Task;
 import kg.mega.test_project.dal.repository.TaskRepository;
 import kg.mega.test_project.dto.SimpleResponse;
@@ -22,6 +23,7 @@ import java.util.List;
 public class TaskServiceImpl implements TaskService {
 
     private final TaskRepository taskRepository;
+    private final EmailConfig emailConfig;
 
     /**
      * Получить все задачи.
@@ -48,6 +50,7 @@ public class TaskServiceImpl implements TaskService {
         task.setDone(taskRequest.isDone());
         log.info("Task success saved");
         taskRepository.save(task);
+        emailConfig.sendTaskCreationEmail( "recipient@example.com", "Новая задача создана", "Задача с описанием: " + taskRequest.getDescription() + " была успешно создана." );
         return SimpleResponse.builder()
                 .httpStatus(HttpStatus.OK)
                 .message("Task with id : %s is saved".formatted(task.getId()))
