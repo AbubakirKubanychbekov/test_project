@@ -24,6 +24,10 @@ public class ExternalServiceImpl implements ExternalService {
             log.info("Полученный ответ от внешнего API: {}", response);
         } catch (Exception e) {
             log.error("Ошибка при выполнении запроса к внешнему API: {}", e.getMessage());
+            return SimpleResponse.builder()
+                    .httpStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .message("Ошибка при запросе к внешнему API: " + e.getMessage())
+                    .build();
         }
         return SimpleResponse.builder()
                 .httpStatus(HttpStatus.OK)

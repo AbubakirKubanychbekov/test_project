@@ -10,6 +10,7 @@ import kg.mega.test_project.exceptions.NotFoundException;
 import kg.mega.test_project.services.TaskService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +29,7 @@ public class TaskServiceImpl implements TaskService {
      * @return Возвращает список задач.
      */
     @Override
+    @Cacheable("tasks")
     public List<TaskResponse> getAll() {
         return taskRepository.getAllTasks();
     }
