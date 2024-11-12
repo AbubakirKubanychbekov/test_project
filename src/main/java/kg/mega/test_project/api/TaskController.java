@@ -29,12 +29,10 @@ public class TaskController {
     @PostMapping
     @Operation(summary = "Сохранить задачи",
             description = "Добавляет новые задачи в список.")
-    @PreAuthorize("hasAnyAuthority('ADMIN')")
+    @PreAuthorize("hasAnyAuthority('ADMIN','USER')")
     public SimpleResponse save(@RequestBody TaskRequest taskRequest) {
         return taskService.save(taskRequest);
     }
-
-
 
     @GetMapping("/{id}")
     @Operation(summary = "Получить задачу по идентификатору",
@@ -53,8 +51,6 @@ public class TaskController {
         return taskService.update(id, taskRequest);
     }
 
-
-    @PermitAll
     @DeleteMapping("/{id}")
     @Operation(summary = "Удалить задачу по идентификатору",
             description = "Удаляет задачу с указанным идентификатором.")

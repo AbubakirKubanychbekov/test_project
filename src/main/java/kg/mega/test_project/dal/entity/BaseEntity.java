@@ -1,13 +1,21 @@
 package kg.mega.test_project.dal.entity;
 
-import lombok.Data;
+import jakarta.persistence.EntityListeners;
+import jakarta.persistence.MappedSuperclass;
+import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 
-@Data
+@Getter
+@Setter
+@RequiredArgsConstructor
+@MappedSuperclass
+@EntityListeners(AuditingEntityListener.class)
 public class BaseEntity {
+
     @CreatedDate
     private LocalDateTime createdAt;
     @LastModifiedDate

@@ -11,6 +11,7 @@ import kg.mega.test_project.exceptions.NotFoundException;
 import kg.mega.test_project.services.TaskService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -44,6 +45,7 @@ public class TaskServiceImpl implements TaskService {
      * @return Ответ о статусе сохранения задачи.
      */
     @Override
+    @CacheEvict(value = "tasks", allEntries = true)
     public SimpleResponse save(TaskRequest taskRequest) {
         Task task = new Task();
         task.setDescription(taskRequest.getDescription());
